@@ -1,0 +1,22 @@
+{
+    "name": "laswitchtech/php-sms",
+    "description": "SMS Library for PHP Applications",
+    "type": "library",
+    "license": "GPL-3.0-only",
+    "autoload": {
+        "psr-4": {
+            "LaswitchTech\\phpSMS\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Louis Ouellet",
+            "email": "louis_ouellet@hotmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "laswitchtech/php-configurator": "^1.0",
+        "laswitchtech/php-logger": "^1.2"
+    }
+}
