@@ -136,7 +136,28 @@ class phpSMS {
 
     return $this;
   }
+  private $Provider = null;
+  private $SID = null;
+  private $Token = null;
+  private $Phone = null;
 
+  /**
+   * Check if phpSMS is ready to send SMS.
+   *
+   * @return boolean
+   */
+  public function isReady(){
+    return ($this->Provider !== null && $this->SID !== null && $this->Token !== null && $this->Phone !== null);
+  }
+
+  /**
+   * Send SMS.
+   *
+   * @param  string  $Number
+   * @param  string  $Body
+   * @return array
+   * @throws Exception
+   */
   public function send($Number, $Body){
     try{
 
