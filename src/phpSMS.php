@@ -153,14 +153,15 @@ class phpSMS {
    * @return bool
    */
   public function validate($number) {
+    if($number){
       // A simple regex for validating a phone number
       $pattern = "/^\+?\d{1,4}[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/";
 
       if (preg_match($pattern, $number)) {
-          return true;
-      } else {
-          return false;
+        return true;
       }
+    }
+    return false;
   }
 
   /**
@@ -171,28 +172,28 @@ class phpSMS {
    * @return string|bool
    */
   public function formatToE164($number, $countryCode) {
-      // Remove all non-digit characters from the phone number
-      $number = preg_replace('/\D/', '', $number);
+    // Remove all non-digit characters from the phone number
+    $number = preg_replace('/\D/', '', $number);
 
-      // Check if the number has a leading '+'
-      if (substr($number, 0, 1) === '+') {
-          return $number;
-      }
+    // Check if the number has a leading '+'
+    if (substr($number, 0, 1) === '+') {
+      return $number;
+    }
 
-      // Check if the number has a leading '0'
-      if (substr($number, 0, 1) === '0') {
-          $number = substr($number, 1);
-      }
+    // Check if the number has a leading '0'
+    if (substr($number, 0, 1) === '0') {
+      $number = substr($number, 1);
+    }
 
-      // Add the country code to the beginning of the number
-      $e164Number = '+' . $countryCode . $number;
+    // Add the country code to the beginning of the number
+    $e164Number = '+' . $countryCode . $number;
 
-      // Validate the E.164 formatted number
-      if ($this->validatePhoneNumber($e164Number)) {
-          return $e164Number;
-      } else {
-          return false;
-      }
+    // Validate the E.164 formatted number
+    if ($this->validatePhoneNumber($e164Number)) {
+      return $e164Number;
+    } else {
+      return false;
+    }
   }
 
   /**
