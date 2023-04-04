@@ -136,10 +136,6 @@ class phpSMS {
 
     return $this;
   }
-  private $Provider = null;
-  private $SID = null;
-  private $Token = null;
-  private $Phone = null;
 
   /**
    * Check if phpSMS is ready to send SMS.
