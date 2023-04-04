@@ -189,7 +189,7 @@ class phpSMS {
     $e164Number = '+' . $countryCode . $number;
 
     // Validate the E.164 formatted number
-    if ($this->validatePhoneNumber($e164Number)) {
+    if ($this->validate($e164Number)) {
       return $e164Number;
     } else {
       return false;
