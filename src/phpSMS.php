@@ -254,7 +254,7 @@ class phpSMS {
       // Construct Data Array
       $Data = [
         'From' => $this->Phone,
-        'To' => $this->formatToE164($Number),
+        'To' => $this->formatToE164($Number, 1),
         'Body' => $Body,
       ];
 
