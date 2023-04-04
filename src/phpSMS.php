@@ -147,6 +147,55 @@ class phpSMS {
   }
 
   /**
+   * Validate phone number format.
+   *
+   * @param  string  $number
+   * @return bool
+   */
+  public function validate($number) {
+      // A simple regex for validating a phone number
+      $pattern = "/^\+?\d{1,4}[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/";
+
+      if (preg_match($pattern, $number)) {
+          return true;
+      } else {
+          return false;
+      }
+  }
+
+  /**
+   * Format phone number to E.164 format.
+   *
+   * @param  string  $number
+   * @param  string  $countryCode
+   * @return string|bool
+   */
+  public function formatToE164($number, $countryCode) {
+      // Remove all non-digit characters from the phone number
+      $number = preg_replace('/\D/', '', $number);
+
+      // Check if the number has a leading '+'
+      if (substr($number, 0, 1) === '+') {
+          return $number;
+      }
+
+      // Check if the number has a leading '0'
+      if (substr($number, 0, 1) === '0') {
+          $number = substr($number, 1);
+      }
+
+      // Add the country code to the beginning of the number
+      $e164Number = '+' . $countryCode . $number;
+
+      // Validate the E.164 formatted number
+      if ($this->validatePhoneNumber($e164Number)) {
+          return $e164Number;
+      } else {
+          return false;
+      }
+  }
+
+  /**
    * Send SMS.
    *
    * @param  string  $Number
@@ -156,6 +205,13 @@ class phpSMS {
    */
   public function send($Number, $Body){
     try{
+
+      // Check Number is valid
+      if(!$this->validate($Number)){
+
+        // Throw Exception
+        throw new Exception("Number is not valid.");
+      }
 
       // Check if Provider was configured
       if(!$this->Provider){
@@ -197,7 +253,7 @@ class phpSMS {
       // Construct Data Array
       $Data = [
         'From' => $this->Phone,
-        'To' => $Number,
+        'To' => $this->formatToE164($Number),
         'Body' => $Body,
       ];
 
